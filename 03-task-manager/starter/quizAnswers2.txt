@@ -1,0 +1,11 @@
+1/The asyncWrapper middleware function was created to refactor and the code so we would not the same code multiple times (the try and catch block that is used for each method) but instead would call the middleware function.
+
+2. 
+const getTask = asyncWrapper(async (req, res, next) => {
+  const { id: taskID } = req.params;
+  const task = await Task.findOne({ _id: taskID });
+  if (!task) {
+    return next(getSingleItemCustomError(`No task with the id: ${taskID}`, 404))
+  }
+  res.status(200).json({ task });
+});
